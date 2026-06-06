@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crypto Chat & Wallet</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <div class="page">
+        <header>
+            <h1>Crypto Deal Room</h1>
+            <p>Live chat, wallet, and trade simulation for Solana, Bitcoin, Ethereum, and Dogecoin.</p>
+        </header>
+
+        <section class="grid">
+            <article class="panel auth-panel">
+                <h2>Sign In / Sign Up</h2>
+                <div class="auth-form">
+                    <input id="authUsername" type="text" placeholder="Username" />
+                    <input id="authPassword" type="password" placeholder="Password" />
+                    <div class="auth-actions">
+                        <button id="signupButton">Sign Up</button>
+                        <button id="loginButton">Sign In</button>
+                    </div>
+                    <button id="phantomSignIn" class="secondary-button">Sign In with Phantom</button>
+                </div>
+                <div id="authMessage" class="status"></div>
+            </article>
+
+            <article class="panel chat-panel">
+                <h2>Live Chat</h2>
+                <div id="chatWindow" class="chat-window"></div>
+                <div class="chat-form">
+                    <input id="sender" type="text" placeholder="Your name" value="Trader" />
+                    <input id="message" type="text" placeholder="Enter message" />
+                    <button id="sendMessage">Send</button>
+                </div>
+            </article>
+
+            <article class="panel trade-panel">
+                <h2>Crypto Deals</h2>
+                <div class="trade-form">
+                    <label for="coin">Coin</label>
+                    <select id="coin">
+                        <option value="solana">Solana</option>
+                        <option value="bitcoin">Bitcoin</option>
+                        <option value="ethereum">Ethereum</option>
+                        <option value="dogecoin">Dogecoin</option>
+                    </select>
+                    <label for="action">Action</label>
+                    <select id="action">
+                        <option value="buy">Buy</option>
+                        <option value="sell">Sell</option>
+                        <option value="hold">Hold</option>
+                    </select>
+                    <label for="amount">Amount</label>
+                    <input id="amount" type="number" step="0.0001" value="1.0" />
+                    <button id="executeTrade">Execute Deal</button>
+                </div>
+                <div id="tradeResult" class="status"></div>
+            </article>
+
+            <article class="panel wallet-panel">
+                <h2>Wallet Summary</h2>
+                <div id="phantomStatusContainer" class="phantom-panel">
+                    <button id="connectWallet">Connect Phantom</button>
+                    <div id="phantomStatus" class="phantom-status">Checking Phantom status...</div>
+                    <div id="phantomAddress" class="wallet-row phantom-address"></div>
+                </div>
+                <div id="walletSummary" class="wallet-summary"></div>
+                <div class="exchange-form">
+                    <input id="exchangeName" type="text" placeholder="Exchange name (e.g. binance)" />
+                    <input id="exchangeKey" type="text" placeholder="API key" />
+                    <input id="exchangeSecret" type="password" placeholder="API secret" />
+                    <button id="connectExchange">Connect Exchange</button>
+                </div>
+                <div id="exchangeStatus" class="status"></div>
+                <div id="exchangeBalances" class="wallet-summary"></div>
+            </article>
+
+            <article class="panel market-panel">
+                <h2>Market Prices</h2>
+                <div id="priceList" class="price-list"></div>
+            </article>
+        </section>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
