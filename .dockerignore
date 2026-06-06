@@ -1,0 +1,8 @@
+*.class
+*.log
+.git
+.gitignore
+.vscode
+target
+out
+**/node_modules
