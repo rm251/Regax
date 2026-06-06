@@ -61,7 +61,10 @@ public class CryptoAgent {
     }
 
     private static Double extractUsdPrice(String json, String coinId) {
-        Pattern pattern = Pattern.compile("\"" + Pattern.quote(coinId) + "\"\\s*:\\s*\\{[^}]*?\\"usd\\"\\s*:\\s*([0-9]+\\.?[0-9]*([eE][+-]?[0-9]+)?)");
+        // Match patterns like: "coinId": { ... "usd": 123.45 ... }
+        String quotedCoin = "\"" + Pattern.quote(coinId) + "\"";
+        String regex = quotedCoin + "\\s*:\\s*\\{[^}]*?\\\"usd\\\"\\s*:\\s*([0-9]+\\.?[0-9]*(?:[eE][+-]?[0-9]+)?)";
+        Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(json);
         if (matcher.find()) {
             try {
@@ -70,6 +73,25 @@ public class CryptoAgent {
                 return null;
             }
         }
+
+        // Fallback: try a simpler key-based search (handles compact JSON)
+        String simpleKey = "\"" + coinId + "\":{";
+        int idx = json.indexOf(simpleKey);
+        if (idx >= 0) {
+            int usdIdx = json.indexOf("\"usd\":", idx);
+            if (usdIdx > idx) {
+                int start = usdIdx + "\"usd\":".length();
+                int end = start;
+                while (end < json.length() && (Character.isDigit(json.charAt(end)) || json.charAt(end) == '.' || json.charAt(end) == 'e' || json.charAt(end) == 'E' || json.charAt(end) == '+' || json.charAt(end) == '-')) {
+                    end++;
+                }
+                try {
+                    return Double.parseDouble(json.substring(start, end));
+                } catch (NumberFormatException ignored) {
+                }
+            }
+        }
+
         return null;
     }
 }
